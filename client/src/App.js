@@ -9,13 +9,15 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import SubmittableForm from "./components/SubmittableForm";
+
 function App() {
   return (
     <div className="App">
       <header>
         <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
           <Container>
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home">David Hermann</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
@@ -39,6 +41,9 @@ function App() {
       </header>
       <main>
         <Container>
+          <Row className="px-4 my-5">
+            <SubmittableForm></SubmittableForm>
+          </Row>
           <Row className="px-4 my-5">
             <Col sm={7}>
               <Image
