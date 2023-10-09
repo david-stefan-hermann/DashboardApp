@@ -24,7 +24,7 @@ const Header = () => {
 
                         <Navbar.Collapse className="justify-content-end">
                             {!currentUser &&
-                                <Navbar.Text><Link to="/login">"zum Login.."</Link></Navbar.Text>
+                                <Navbar.Text><Link to="/login">zum Login..</Link></Navbar.Text>
                             }
                             {currentUser &&
                                 <Navbar.Text>Hallo <Link to="/logout">{currentUser.username}</Link>!</Navbar.Text>
