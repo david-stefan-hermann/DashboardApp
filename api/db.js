@@ -1,4 +1,12 @@
+
+
+
+
+
+/*  MySQL Database
+
 import mysql from "mysql2";
+
 
 export const db = mysql.createPool({
     host: "localhost",
@@ -6,3 +14,5 @@ export const db = mysql.createPool({
     password: "password",
     database: "blog_schema",
 });
+
+*/
