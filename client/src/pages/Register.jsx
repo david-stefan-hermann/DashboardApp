@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import axios from "axios";
 
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const Register = () => {
     const [inputs, setInputs] = useState({

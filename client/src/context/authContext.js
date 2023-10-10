@@ -11,8 +11,8 @@ export const AuthContextProvider = ({children}) => {
         setCurrentUser(res.data);
     }
     
-    const logout = async(inputs) => {
-        await axios.post("/auth/logout", inputs)
+    const logout = async() => {
+        await axios.post("/auth/logout")
         setCurrentUser(null);
     }
 
@@ -20,5 +20,7 @@ export const AuthContextProvider = ({children}) => {
         localStorage.setItem("user", JSON.stringify(currentUser))
     }, [currentUser])
 
-    return <AuthContext.Provider value={{currentUser, login, logout}}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{currentUser, login, logout}}>
+        {children}
+    </AuthContext.Provider>
 }

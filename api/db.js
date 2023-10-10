@@ -1,5 +1,5 @@
 import pg from 'pg'
-const { Pool, Client } = pg;
+const { Pool } = pg;
 
 export const db = new Pool({
     user: 'postgres',
@@ -20,22 +20,3 @@ export const queryDB = (query, values) => {
         console.log(err)
     }
 }
-
-const qu = "INSERT INTO blog_schema.users(username, password, img) VALUES ($1, $2, $3)"
-const values = ['sexy', 'nerd', 'i']
-
-//queryDB(qu, values);
-
-/*  MySQL Database
-
-import mysql from "mysql2";
-
-
-export const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "blog_schema",
-});
-
-*/

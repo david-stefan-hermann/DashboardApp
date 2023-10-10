@@ -15,11 +15,10 @@ export const register = (req, res) => {
     db.query(user_query, [req.body.username])
     .then(result => {
         // terminate if empty
-
         if(result.rows.length) return res.status(409).json("User already exists.")
     })
     .catch(err => {
-        return res.json(err)
+        return console.log(err)
     })
 
     // Hash the pw with bcryptjs
@@ -37,7 +36,7 @@ export const register = (req, res) => {
         return res.status(200).json("user has been created.")
     })
     .catch(err => {
-        return res.json(err)
+        return console.log(err)
     })
 }
 
@@ -67,13 +66,16 @@ export const login = (req, res) => {
             httpOnly: true
         }).status(200).json(other)
 
-        return res.json("welcome " + result.rows[0].username)
+        return res.status(200).json("welcome " + result.rows[0].username)
     })
     .catch(err => {
-        return res.status(422).json("querry failed, try again later.")
+        return console.log(err)
     })
 }
 
 export const logout = (req, res) => {
-    return res.status(400).json("Not Implemented");
+    res.clearCookie("access_token",{
+        sameSite:"none",
+        secure:true
+    }).status(200).json("logged out")
 }

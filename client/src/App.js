@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import FrontPage from "./pages/FrontPage";
 import CredentialSiteFrame from "./components/CredentialSiteFrame";
 import Register from "./pages/Register";
 import Login from "./pages/Login";

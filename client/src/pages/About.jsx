@@ -19,7 +19,7 @@ const About = (props) => {
               ></Image>
               </Col>
             <Col sm={8}>
-              <h1 className='font-weight-light'>Minute 01:33:26</h1>
+              <h1 className='font-weight-light'>Minute 01:36:30</h1>
               <p className="mt-4">
                 Change the underlying component CSS base class name and modifier class names prefix. This is an escape hatch for working with heavily customized bootstrap css.
               </p>
@@ -28,7 +28,7 @@ const About = (props) => {
           </Row>
           <Row className="px-4 my-5">
             <Col sm={5}>
-              <h1 className='font-weight-light'>Minute 01:18:26</h1>
+              <h1 className='font-weight-light'>Grrr</h1>
               <p className="mt-4">
                 Change the underlying component CSS base class name and modifier class names prefix. This is an escape hatch for working with heavily customized bootstrap css.
               </p>
