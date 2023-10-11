@@ -18,8 +18,8 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
 
                         <Nav className="">
-                            <Nav.Link href="/portfolio">Portfolio</Nav.Link>
-                            <Nav.Link href="/experience">Erfahrung</Nav.Link>
+                            <Nav.Link href="/doku/?category=public">Dokumentation</Nav.Link>
+                            <Nav.Link href="https://github.com/david-stefan-hermann">Meine Projekte</Nav.Link>
                         </Nav>
 
                         <Navbar.Collapse className="justify-content-end">

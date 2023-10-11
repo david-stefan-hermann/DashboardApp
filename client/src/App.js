@@ -9,8 +9,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import About from "./pages/About";
-import Portfolio from "./pages/Portfolio";
-import Experience from "./pages/Experience";
+import Blog from "./pages/Blog";
+import SinglePage from "./pages/SinglePage";
 
 const Layout = () => {
   return (
@@ -32,12 +32,12 @@ const router = createBrowserRouter([
         element: <About></About>
       },
       {
-        path: "/portfolio",
-        element: <Portfolio></Portfolio>
+        path: "/doku",
+        element: <Blog title="Doku Seite"></Blog>
       },
       {
-        path: "/experience",
-        element: <Experience></Experience>
+        path: "/doku/post/:id",
+        element: <SinglePage></SinglePage>
       }
     ]
   },
