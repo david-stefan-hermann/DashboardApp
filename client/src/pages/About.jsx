@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 const About = (props) => {
     return (
         <Container>
-          <Row className="px-4 my-5">
+          <Row className="p-5 m-3 secondary-color rounded text-light">
             <Col sm={4}>
               <Image
                 src="https://picsum.photos/400/400"
@@ -26,7 +26,7 @@ const About = (props) => {
               <Button>Call to Action</Button>
             </Col>
           </Row>
-          <Row className="px-4 my-5">
+          <Row className="p-5 m-3 secondary-color-dark rounded text-light">
             <Col sm={5}>
               <h1 className='font-weight-light'>Grrr</h1>
               <p className="mt-4">

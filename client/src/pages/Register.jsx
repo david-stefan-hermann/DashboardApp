@@ -56,7 +56,7 @@ const Register = () => {
             {err && 
             <Alert key="warning" variant="warning">{err}</Alert>}
             <Button onClick={handleSubmit}>Registrieren</Button>
-            <p className="my-3">Hast du schon ein Konto? <Link to="/login">weiter zum Login..</Link></p>
+            <p className="my-3">Bereits registriert? <Link to="/login">zum Login..</Link></p>
         </>
     )
 }

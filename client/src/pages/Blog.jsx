@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Container from "react-bootstrap/esm/Container"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -10,24 +10,40 @@ import { Link, useLocation } from "react-router-dom"
 import PostList from "../components/PostList"
 import TableOfContent from "../components/TableOfContent"
 import OnSitePost from "../components/OnSitePost"
-import { PostContextProvider } from '../context/postContext';
+import SiteLocation from "../components/SiteLocation"
+import { PostContext } from '../context/postContext';
 
 const Blog = (props) => {
+    const { currentPostId, subSitesExist } = useContext(PostContext)
+
     return (
         <main>
-            <PostContextProvider>
             <Container>
-                <Row className="px-4 my-5">
-                    <Col sm={5}>
+                <Row className="bg-dark text-light p-5 m-3 rounded">
+                    <Col sm={12}>
                         <TableOfContent></TableOfContent>
                     </Col>
-                    <Col sm={7}>
-                        <PostList></PostList>
-                    </Col>
                 </Row>
-                <OnSitePost></OnSitePost>
+                <Row className="m-3">
+                    <SiteLocation></SiteLocation>
+                </Row>
+                {currentPostId > 0 ? (
+                    <Row className="bg-dark text-light p-5 m-3 rounded">
+                        <OnSitePost></OnSitePost>
+                    </Row>
+                ) : (
+                    <></>
+                )}
+                {subSitesExist == true ? (
+                    <Row className="bg-dark text-light p-5 m-3 rounded">
+                        <Col sm={12}>
+                            <PostList></PostList>
+                        </Col>
+                    </Row>
+                ) : (
+                    <></>
+                )}
             </Container>
-            </PostContextProvider>
         </main>
     )
 }

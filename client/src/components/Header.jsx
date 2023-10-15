@@ -11,20 +11,20 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" variant="dark" bg="dark" className="fw-normal">
                 <Container>
-                    <Navbar.Brand href="/">David Hermann</Navbar.Brand>
+                    <Navbar.Brand className="background-color-text" href="/">David Hermann</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
 
-                        <Nav className="">
-                            <Nav.Link href="/doku/?category=public">Dokumentation</Nav.Link>
-                            <Nav.Link href="https://github.com/david-stefan-hermann">Meine Projekte</Nav.Link>
+                        <Nav>
+                            <Nav.Link className="background-color-text" href="/doku/?category=public">Dokumentation</Nav.Link>
+                            <Nav.Link className="background-color-text" href="https://github.com/david-stefan-hermann">Meine Projekte</Nav.Link>
                         </Nav>
 
                         <Navbar.Collapse className="justify-content-end">
                             {!currentUser &&
-                                <Navbar.Text><Link to="/login">zum Login..</Link></Navbar.Text>
+                                <Navbar.Text><Link className="background-color-text" to="/login">zum Login..</Link></Navbar.Text>
                             }
                             {currentUser &&
                                 <Navbar.Text>Hallo <Link to="/logout">{currentUser.username}</Link>!</Navbar.Text>

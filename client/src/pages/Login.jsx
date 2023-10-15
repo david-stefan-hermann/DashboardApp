@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
+import Card from 'react-bootstrap/Card';
 
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
@@ -57,7 +58,7 @@ const Login = () => {
             {err && 
             <Alert key="warning" variant="warning">{err}</Alert>}
             <Button onClick={handleSubmit}>Anmelden</Button>
-            <p className="my-3">Hast du noch kein Konto? <Link to="/register">Hier registrieren..</Link></p>
+            <p className="my-3">Kein Konto? <Link to="/register">Hier registrieren..</Link></p>
         </>
     )
 }

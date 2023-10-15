@@ -21,9 +21,7 @@ export const getPosts = (req, res) => {
     })
 }
 
-export const getPost = (req, res) => {
-    console.log("getPost call, id: " + req.params.id)
-    
+export const getPost = (req, res) => { 
     const q = {
         //text: "SELECT 'username', 'img', 'uid', 'title', 'content', 'image', 'parent', 'updated' FROM 'blog_schema.users' JOIN 'blog_schema.posts' ON 'blog_schema.users'.'id' = 'blog_schema.posts'.'uid' WHERE 'blog_schema.posts'.id = $1",
         text: "SELECT * FROM blog_schema.posts WHERE blog_schema.posts.id = ($1)",
@@ -34,7 +32,6 @@ export const getPost = (req, res) => {
 
     db.query(q)
     .then(result => {
-        console.log(">>>> " + result.rows[0])
         return res.status(200).json(result.rows[0])
     })
     .catch(err => {

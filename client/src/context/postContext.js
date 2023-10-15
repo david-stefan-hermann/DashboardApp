@@ -3,11 +3,16 @@ import { createContext, useEffect, useState } from "react"
 export const PostContext = createContext()
 
 export const PostContextProvider = ({children}) => {
-    const [post, setPost] = useState({})
-    const [parentId, setParentId] = useState([])
-    const [currentPostId, setCurrentPostId] = useState([])
+    const [parentId, setParentId] = useState(0)
+    const [currentPostId, setCurrentPostId] = useState(null)
+    const [subSitesExist, setSubSitesExist] = useState(false)
 
-    return <PostContext.Provider value={{post, setPost, parentId, setParentId, currentPostId, setCurrentPostId}}>
+    const goToTopLevel = () => {
+        setParentId(0)
+        setCurrentPostId(null)
+    }
+
+    return <PostContext.Provider value={{ subSitesExist, setSubSitesExist, goToTopLevel, parentId, setParentId, currentPostId, setCurrentPostId}}>
         {children}
     </PostContext.Provider>
 }
