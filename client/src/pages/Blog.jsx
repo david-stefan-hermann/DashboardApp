@@ -1,50 +1,33 @@
 import React, { useEffect, useState } from "react"
-import Container from "react-bootstrap/esm/Container";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from "react-bootstrap/esm/Image";
+import Container from "react-bootstrap/esm/Container"
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Image from "react-bootstrap/esm/Image"
+import Button from 'react-bootstrap/Button'
 
-import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import axios from "axios"
+import { Link, useLocation } from "react-router-dom"
+import PostList from "../components/PostList"
+import TableOfContent from "../components/TableOfContent"
+import OnSitePost from "../components/OnSitePost"
+import { PostContextProvider } from '../context/postContext';
 
 const Blog = (props) => {
-    const [posts, setPosts] = useState([])
-
-    const cat = useLocation().search
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("/posts/" + cat)
-                setPosts(res.data)
-            } catch(err) {
-                console.log(err)
-            }
-        }
-        fetchData();
-    }, [cat])
-
     return (
         <main>
+            <PostContextProvider>
             <Container>
-                <h1>{props.title}</h1>
-                {posts.map(post => {
-                    return (
-                    <Row className="post" key={post.id}>
-                        <Col sm={4}>
-                            <Image
-                                src={post.image}
-                                fluid
-                            ></Image>
-                        </Col>
-                        <Col sm={8}>
-                            <h1 className='font-weight-light'>{post.title}</h1>
-                            <Link className="link" to={'/doku/post/' + post.id + ''}>Mehr erfahren</Link>
-                            <p className="mt-4">{post.short}</p>
-                        </Col>
-                    </Row>
-                )})}
+                <Row className="px-4 my-5">
+                    <Col sm={5}>
+                        <TableOfContent></TableOfContent>
+                    </Col>
+                    <Col sm={7}>
+                        <PostList></PostList>
+                    </Col>
+                </Row>
+                <OnSitePost></OnSitePost>
             </Container>
+            </PostContextProvider>
         </main>
     )
 }

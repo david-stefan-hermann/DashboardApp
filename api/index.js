@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.js"
 import usersRoutes from "./routes/users.js"
 import postRoutes from "./routes/posts.js"
+import linkRoutes from "./routes/links.js"
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(cookieParser())
 app.use("/api/auth", authRoutes)
 app.use("/api/users", usersRoutes)
 app.use("/api/posts", postRoutes)
+app.use("/api/links", linkRoutes)
 
 app.listen(8800, () => {
     console.log('Running on p 8800')
