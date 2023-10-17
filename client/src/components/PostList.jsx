@@ -9,13 +9,12 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { PostContext } from "../context/postContext"
 
-
 const PostList = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [posts, setPosts, setSubSitesExist] = useState([])
 
     // loading the correct sub site
-    const { parentId, setParentId, setCurrentPostId, currentPostId } = useContext(PostContext)
+    const { setCurrentPostTitle, parentId, setParentId, setCurrentPostId, currentPostId } = useContext(PostContext)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,11 +31,12 @@ const PostList = () => {
         setIsLoading(false)
     }, [parentId])
 
-    const handleClick = (post, parent) => {
-        setCurrentPostId(post)
-        setParentId(parent)
+    const handleClick = (post) => {
+        /*
+        setCurrentPostTitle(post.title)
+        setParentId(post.parentid)
+        */
     }
-
 
     return (
         <>
@@ -55,7 +55,7 @@ const PostList = () => {
                     <Col sm={8}>
                         <h4 className='font-weight-light'>{post.title}</h4>
                         <p className="mt-4">{post.short}</p>
-                        <Link className="mt-2" onClick={() => handleClick(post.id, post.parentid)}>Beitrag anzeigen</Link>
+                        <Link className="mt-2" onClick={() => handleClick(post)}>Beitrag anzeigen</Link>
                     </Col>
                 </Row>
             )})}

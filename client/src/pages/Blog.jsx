@@ -14,7 +14,16 @@ import SiteLocation from "../components/SiteLocation"
 import { PostContext } from '../context/postContext';
 
 const Blog = (props) => {
-    const { currentPostId, subSitesExist } = useContext(PostContext)
+    const { currentPostId, setCurrentPostId, subSitesExist, currentPostTitle } = useContext(PostContext)
+
+    const postIdFromUrl = useLocation().pathname.split("/")[2]
+    
+    useEffect(() => {
+        console.log("Blog: " + currentPostTitle + postIdFromUrl)
+        
+        setCurrentPostId(postIdFromUrl)
+
+    }, [postIdFromUrl])
 
     return (
         <main>

@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider, Route, Outlet } from "react-router-dom";
 
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CredentialSiteFrame from "./components/CredentialSiteFrame";
@@ -10,6 +9,8 @@ import Logout from "./pages/Logout";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import SinglePage from "./pages/SinglePage";
+
+import { PostContext } from "./context/postContext"
 
 const Layout = () => {
   return (
@@ -32,11 +33,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/doku",
-        element: <Blog title="Doku Seite"></Blog>
+        element: <Blog></Blog>
       },
       {
         path: "/doku/post/:id",
         element: <SinglePage></SinglePage>
+      },
+      {
+        path: "/doku/:id",
+        element: <Blog></Blog>
+      },
+      {
+        path: "/doku/:id/:title",
+        element: <Blog></Blog>
       }
     ]
   },

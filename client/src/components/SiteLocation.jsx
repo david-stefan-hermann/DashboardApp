@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
-
+import { Link } from "react-router-dom"
 
 const SiteLocation = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -24,7 +24,7 @@ const SiteLocation = () => {
         if (id == 0 || !id || id == null) {
         } else {
             try {
-                const res = await axios.get("/location/" + id)
+                const res = await axios.get("/links/" + id)
                 //setLoopCurrentId(res.data[0].parentid)
                 
                 findById(res.data[0].parentid)
@@ -44,8 +44,10 @@ const SiteLocation = () => {
     }, [currentPostId])
 
     const handleClick = (post, parent) => {
+        /*
         setCurrentPostId(post)
         setParentId(parent)
+    */
     }
 
     return (
@@ -53,12 +55,22 @@ const SiteLocation = () => {
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             <Card text="light" bg="dark">
                 <Card.Body>
-                    Du befindest dich hier:&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Card.Link className="font-weight-light cursor-pointer" onClick={goToTopLevel}>Doku</Card.Link>
+                    Du befindest dich hier:&nbsp;&nbsp;
+                    <Link 
+                    to={"/doku/"}
+                    key={"loc-0"}
+                    className="font-weight-light cursor-pointer" 
+                    
+                    >Doku</Link>
                     {siteLocation.map(loc => {
                         return (
-                        <>&nbsp;&nbsp;&nbsp;&nbsp;&gt;
-                        <Card.Link key={"loc-" + loc.id} className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} onClick={() => handleClick(loc.id, loc.parentid)}>{loc.title}</Card.Link></>
+                        <>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                        <Link 
+                        to={"/doku/" + loc.id + "/" + loc.title}
+                        key={"loc-" + loc.id} 
+                        className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
+                        onClick={() => handleClick(loc.id, loc.parentid)}
+                        >{loc.title}</Link></>
                         )
                     })}
                     </Card.Body>

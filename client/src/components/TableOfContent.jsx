@@ -10,71 +10,31 @@ import { PostContext } from "../context/postContext"
 const TableOfContent = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [postLinks, setPostLinks] = useState([])
-    const [linkIndents, setLinkIndents] = useState([])
 
     // loading the correct sub site
-    const { setParentId, setCurrentPostId, parentId, currentPostId } = useContext(PostContext)
+    const { currentPostId } = useContext(PostContext)
 
     // sorting links ################################### s
-
-    function buildTableOfContentsCall(entries, parent_id = 0) {
-        return buildTableOfContentsWithIndents(entries)
-
-        for (const entry of entries) {
-            entry.indent = 0
-        }
-        
-        return buildTableOfContents(entries, parent_id = 0)
-    }
-
-    function buildTableOfContents(entries, parent_id = 0) {
-
-        const sortedEntries = entries
-            .filter((entry) => parseInt(entry.parentid, 10) === parent_id)
-            .sort((a, b) => a.title.localeCompare(b.title));
-
-        if (sortedEntries.length === 0) {
-            return null;
-        }
-
-        const list = []
-        for (const entry of sortedEntries) {
-            //const li = document.createElement('li');
-            //li.textContent = entry.title;
-            entry.indent++
-            
-            const listItem = [entry]
-            
-            const subContents = buildTableOfContents(entries, parseInt(entry.id, 10));
-            if (subContents) {
-                listItem.push(subContents);
-            }
-
-            list.push(listItem);
-        }
-
-        return list;
-    }
 
     function buildTableOfContentsWithIndents(entries, parent_id = 0, level = 0) {
         const result = [];
       
         const sortedEntries = entries
-          .filter((entry) => parseInt(entry.parentid) === parent_id)
-          .sort((a, b) => a.title.localeCompare(b.title));
+            .filter((entry) => parseInt(entry.parentid) === parent_id)
+            .sort((a, b) => a.title.localeCompare(b.title));
       
         for (const entry of sortedEntries) {
-          const indents = level + 1;
-          const entryWithIndent = { ...entry, indents };
-      
-          result.push(entryWithIndent);
-      
-          const subContents = buildTableOfContentsWithIndents(entries, parseInt(entry.id), indents);
-          if (subContents.length > 0) {
-            result.push(...subContents);
-          }
+            const indents = level + 1;
+            const entryWithIndent = { ...entry, indents };
+        
+            result.push(entryWithIndent);
+            
+            const subContents = buildTableOfContentsWithIndents(entries, parseInt(entry.id), indents);
+            if (subContents.length > 0) {
+                result.push(...subContents);
+            }
         }
-      
+
         return result;
       }
 
@@ -83,7 +43,7 @@ const TableOfContent = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("/links/", { params: { parentId: parentId }})
+                const res = await axios.get("/links/")
                 
                 setPostLinks(buildTableOfContentsWithIndents(res.data))
             } catch(err) {
@@ -96,9 +56,12 @@ const TableOfContent = () => {
         // sort array
     }, [currentPostId])
 
-    const handleClick = (post, parent) => {
-        setCurrentPostId(post)
-        setParentId(parent)
+    const handleClick = (post) => {
+        /*
+        setCurrentPostId(post.id)
+        setCurrentPostTitle(post.title)
+        setParentId(post.parentid)
+        */
     } 
 
     return (
@@ -114,9 +77,10 @@ const TableOfContent = () => {
                                 return(<span className={ post.id == currentPostId ? "active cursor-pointer" : "cursor-pointer not-active"}>. . </span>)
                             })}
                             <Link 
+                                to={"/doku/" + post.id + "/" + post.title}
                                 key={"toc-" + post.id} 
                                 className={ post.id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
-                                onClick={() => handleClick(post.id, post.parentid)}
+                                onClick={() => handleClick(post)}
                             >{post.title}</Link>
                         </Col>
                     </Row>

@@ -7,6 +7,7 @@ import LoadingSpinner from "./LoadingSpinner"
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
+import { useLocation } from "react-router-dom"
 
 const OnSitePost = () => {
     const [isLoading, setIsLoading] = useState(true)
