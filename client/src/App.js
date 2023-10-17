@@ -9,6 +9,7 @@ import Logout from "./pages/Logout";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import SinglePage from "./pages/SinglePage";
+import PostEditor from "./pages/PostEditor";
 
 import { PostContext } from "./context/postContext"
 
@@ -36,16 +37,21 @@ const router = createBrowserRouter([
         element: <Blog></Blog>
       },
       {
-        path: "/doku/post/:id",
-        element: <SinglePage></SinglePage>
-      },
-      {
         path: "/doku/:id",
         element: <Blog></Blog>
       },
       {
         path: "/doku/:id/:title",
         element: <Blog></Blog>
+      }
+      ,
+      {
+        path: "/doku/:id/edit",
+        element: <PostEditor></PostEditor>
+      },
+      {
+        path: "/doku/:id/:title/edit",
+        element: <PostEditor></PostEditor>
       }
     ]
   },

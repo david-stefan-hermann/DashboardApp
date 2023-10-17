@@ -13,7 +13,7 @@ import OnSitePost from "../components/OnSitePost"
 import SiteLocation from "../components/SiteLocation"
 import { PostContext } from '../context/postContext';
 
-const Blog = (props) => {
+const Blog = () => {
     const { currentPostId, setCurrentPostId, subSitesExist, currentPostTitle } = useContext(PostContext)
 
     const postIdFromUrl = useLocation().pathname.split("/")[2]

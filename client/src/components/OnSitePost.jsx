@@ -8,6 +8,7 @@ import LoadingSpinner from "./LoadingSpinner"
 import axios from "axios"
 import { PostContext } from "../context/postContext"
 import { useLocation } from "react-router-dom"
+import ReactMarkdown from 'react-markdown';
 
 const OnSitePost = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +24,7 @@ const OnSitePost = () => {
                 console.log(err)
             }
         }
-        fetchData();
+        fetchData()
         setIsLoading(false)
     }, [currentPostId])
 
@@ -42,7 +43,7 @@ const OnSitePost = () => {
             </Col>
             <hr className="my-4"></hr>
             <Container>
-                {post?.content}
+                <ReactMarkdown>{post?.content}</ReactMarkdown>
             </Container>
         </>
     )
