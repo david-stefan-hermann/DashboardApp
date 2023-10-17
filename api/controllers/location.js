@@ -1,11 +1,7 @@
 import { db } from "../db.js"
 
 
-export const getLocation = (req, res) => {
-
-    console.log("getLocation, id: " + req.params.id)
-   
-    console.log("fetching links")
+export const getLocation = (req, res) => {   
     const q = {
         text: "SELECT id, parentid, title FROM blog_schema.posts WHERE id = $1",
         values: [req.params.id]

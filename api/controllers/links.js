@@ -2,7 +2,6 @@ import { db } from "../db.js"
 
 
 export const getLinks = (req, res) => {
-    console.log("fetching links")
     const q = req.params.parentId ? {
         text: "SELECT id, parentid, title FROM blog_schema.posts WHERE parentid = ($1)",
         values: [req.params.parentId]

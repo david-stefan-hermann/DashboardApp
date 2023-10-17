@@ -14,7 +14,6 @@ const OnSitePost = () => {
     const { currentPostId } = useContext(PostContext)
     
     useEffect(() => {
-        console.log("# osp: using effect!")
         const fetchData = async () => {
             try {
                 const res = await axios.get("/posts/" + currentPostId)
@@ -27,8 +26,6 @@ const OnSitePost = () => {
         setIsLoading(false)
     }, [currentPostId])
 
-    console.log("osp post: " + post?.title)
-
     return (
         <>
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
@@ -40,8 +37,12 @@ const OnSitePost = () => {
             </Col>
             <Col sm={7}>
                 <h1 className='font-weight-light'>{post?.title}</h1>
-                <p className="mt-4">{post?.content}</p>
+                <p className="mt-4">{post?.short}</p>
             </Col>
+            <hr className="my-4"></hr>
+            <Container>
+                {post?.content}
+            </Container>
         </>
     )
 }

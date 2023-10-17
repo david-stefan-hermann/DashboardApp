@@ -20,22 +20,16 @@ const SiteLocation = () => {
     // parent id for loop
     let searchForParent = parentId
 
-    console.log("-----> " + searchForParent + " - " + (searchForParent > 0) + " <-----" )
-
     const findById = async id => {
         if (id == 0 || !id || id == null) {
         } else {
-            console.log("------> searching parent of: " + id + " <------")
             try {
                 const res = await axios.get("/location/" + id)
                 //setLoopCurrentId(res.data[0].parentid)
                 
                 findById(res.data[0].parentid)
                 
-                setSiteLocation(oldSiteLocation => [res.data[0], ...oldSiteLocation])
-
-                console.log("-------> " + res.data[0].title + " <-------")
-                
+                setSiteLocation(oldSiteLocation => [res.data[0], ...oldSiteLocation])                
             } catch(err) {
                 console.log(err)
             }
