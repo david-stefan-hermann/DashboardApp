@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #55dde0;
-    --secondary-color: #33658a;
+    --primary-color: #214F4B;
+    --secondary-color: #4B6858;
     --secondary-color-dark: #2f4858;
     --another-color: #f6ae2d;
     --another-color-dark: #f26419;
@@ -8,6 +8,7 @@
     --white: #FFF;
     --green-1: #8DE969;
     --green-2: #CBEF43;
+    --night: #191923;
 }
 
 .primary-color {
@@ -30,6 +31,9 @@
 }
 .background-color2 {
     background-color: var(--white);
+}
+.night-color {
+    background-color: var(--night);
 }
 
 .primary-color-text {

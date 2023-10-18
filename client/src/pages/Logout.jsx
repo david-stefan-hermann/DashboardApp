@@ -28,7 +28,6 @@ const Logout = () => {
             <Button onClick={handleSubmit}>Abmelden</Button>
             {err && 
             <Alert key="warning" variant="warning">{err}</Alert>}
-            <p className="my-1"><Link to="/">..zurück</Link></p>
         </>
     )
 }

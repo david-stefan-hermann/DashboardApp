@@ -56,14 +56,6 @@ const TableOfContent = () => {
         // sort array
     }, [currentPostId])
 
-    const handleClick = (post) => {
-        /*
-        setCurrentPostId(post.id)
-        setCurrentPostTitle(post.title)
-        setParentId(post.parentid)
-        */
-    } 
-
     return (
         <>
             <h3>Table Of Contents</h3>
@@ -80,7 +72,6 @@ const TableOfContent = () => {
                                 to={"/doku/" + post.id + "/" + post.title}
                                 key={"toc-" + post.id} 
                                 className={ post.id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
-                                onClick={() => handleClick(post)}
                             >{post.title}</Link>
                         </Col>
                     </Row>

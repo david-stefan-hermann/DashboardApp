@@ -5,6 +5,8 @@ import Image from "react-bootstrap/esm/Image"
 import Button from 'react-bootstrap/Button'
 import LoadingSpinner from "./LoadingSpinner"
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import { HouseFill, CaretRightFill } from 'react-bootstrap-icons';
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
@@ -53,28 +55,21 @@ const SiteLocation = () => {
     return (
         <>
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
-            <Card text="light" bg="dark">
-                <Card.Body>
-                    Du befindest dich hier:&nbsp;&nbsp;
-                    <Link 
-                    to={"/doku/"}
-                    key={"loc-0"}
-                    className="font-weight-light cursor-pointer" 
-                    
-                    >Doku</Link>
-                    {siteLocation.map(loc => {
-                        return (
-                        <>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+            <Container>
+            <Link><HouseFill color="var(--green-1)" /></Link>
+                {siteLocation.map((loc, idx) => {
+                    return (
+                        <>
+                        <span className="not-active">&nbsp;&nbsp;<CaretRightFill />&nbsp;&nbsp;</span>  
                         <Link 
                         to={"/doku/" + loc.id + "/" + loc.title}
                         key={"loc-" + loc.id} 
                         className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
                         onClick={() => handleClick(loc.id, loc.parentid)}
                         >{loc.title}</Link></>
-                        )
-                    })}
-                    </Card.Body>
-            </Card>
+                    )
+                })}
+            </Container>
         </>
     )
 }

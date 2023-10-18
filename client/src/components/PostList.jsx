@@ -40,7 +40,7 @@ const PostList = () => {
 
     return (
         <>
-            <h3>Unterseiten</h3>
+            { posts.length > 0 ? <h3>Unterseiten</h3> : ""}
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             {posts.map(post => {
                 return (  

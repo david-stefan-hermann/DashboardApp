@@ -28,30 +28,24 @@ const Blog = () => {
     return (
         <main>
             <Container>
-                <Row className="bg-dark text-light p-5 m-3 rounded">
-                    <Col sm={12}>
-                        <TableOfContent></TableOfContent>
+                <Row className="text-light my-3">
+                    <Col sm={4}>
+                        <Row className="text-light px-2 my-3">
+                            <TableOfContent></TableOfContent>
+                        </Row>
+                        <Row className="text-light px-2 my-4">
+                            <PostList></PostList>
+                        </Row>
+                    </Col>
+                    <Col sm={8}>
+                        <Row className="text-light px-2 my-3">
+                            <SiteLocation className="mb-3"></SiteLocation>
+                        </Row>
+                        <Row>
+                            {currentPostId > 0 ? <OnSitePost></OnSitePost> : "" }
+                        </Row>
                     </Col>
                 </Row>
-                <Row className="m-3">
-                    <SiteLocation></SiteLocation>
-                </Row>
-                {currentPostId > 0 ? (
-                    <Row className="bg-dark text-light p-5 m-3 rounded">
-                        <OnSitePost></OnSitePost>
-                    </Row>
-                ) : (
-                    <></>
-                )}
-                {subSitesExist == true ? (
-                    <Row className="bg-dark text-light p-5 m-3 rounded">
-                        <Col sm={12}>
-                            <PostList></PostList>
-                        </Col>
-                    </Row>
-                ) : (
-                    <></>
-                )}
             </Container>
         </main>
     )

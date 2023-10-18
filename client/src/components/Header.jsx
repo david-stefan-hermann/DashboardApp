@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 
 const Header = () => {
 
-    const { currentUser } =useContext(AuthContext)
+    const { currentUser } = useContext(AuthContext)
 
     return (
         <header>
