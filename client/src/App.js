@@ -43,8 +43,11 @@ const router = createBrowserRouter([
       {
         path: "/doku/:id/:title",
         element: <Blog></Blog>
-      }
-      ,
+      },
+      {
+        path: "/doku/edit",
+        element: <PostEditor></PostEditor>
+      },
       {
         path: "/doku/:id/edit",
         element: <PostEditor></PostEditor>

@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Col'
 import Image from "react-bootstrap/esm/Image"
 import LoadingSpinner from "./LoadingSpinner"
 import { AuthContext } from "../context/authContext"
+import { PencilFill } from "react-bootstrap-icons"
+import Moment from 'moment'
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
@@ -35,15 +37,15 @@ const OnSitePost = () => {
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             <Row>
                 <h1 className='font-weight-light'>{post?.title}</h1>
-                <p className="mt-4">{post?.short}</p>
-                {console.log("ops: " + currentUser.id)}
-                { currentUser?.id == 1 ?
+                <h6 className="fst-italic">{post?.username}, {Moment(post?.updated).format("DD.MM.YYYY, HH:mm")}</h6>
+                { currentUser?.id == post?.uid ?
                     // edit button
                     <Link 
                         to={"edit"}
                         className="text-decoration-none" 
-                    >Diesen Beitrag bearbeiten</Link> : ""
+                    ><PencilFill /> Diesen Beitrag bearbeiten</Link> : ""
                 }
+                <p className="mt-4">{post?.short}</p>                
             </Row>
             <Row>
                 <Container>

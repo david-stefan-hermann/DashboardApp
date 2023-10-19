@@ -3,7 +3,7 @@ import { db } from "../db.js"
 
 export const getLinks = (req, res) => {
     const q = {
-        text: "SELECT id, parentid, title FROM blog_schema.posts"
+        text: "SELECT id, parentid, title FROM blog_schema.posts ORDER BY title"
     }
 
     // TODO: check permission to view private posts 

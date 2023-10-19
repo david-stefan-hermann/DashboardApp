@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import LoadingSpinner from "./LoadingSpinner"
+import { DatabaseFillAdd } from "react-bootstrap-icons"
 
 import axios from "axios"
 import { Link } from "react-router-dom"
@@ -77,6 +78,14 @@ const TableOfContent = () => {
                     </Row>
                 )
             })}
+            <Row className="toc-row mt-3">
+                <Col sm={12}>
+                    <Link 
+                        to="/doku/edit" 
+                        className="text-decoration-none"
+                    ><DatabaseFillAdd /> Beitrag hinzufügen</Link>
+                </Col>
+            </Row>
         </>
     )
 }
