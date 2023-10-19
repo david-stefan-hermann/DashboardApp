@@ -8,6 +8,8 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 
   background-color: var(--night);
+
+  text-align: justify;
 }
 
 a {

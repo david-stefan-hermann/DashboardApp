@@ -6,7 +6,7 @@ import Image from "react-bootstrap/esm/Image"
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import { Trash, Upload } from "react-bootstrap-icons"
+import { Trash, Upload, ArrowLeftCircleFill } from "react-bootstrap-icons"
 
 import axios from "axios"
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
@@ -26,7 +26,7 @@ const PostEditor = () => {
     const [ creatingNewPost, setCreatingNewPost ] = useState(false)
     const [ post, setPost ] = useState({})
     const [ newPost, setNewPost ] = useState({})
-    const [postLinks, setPostLinks] = useState([])
+    const [ postLinks, setPostLinks ] = useState([])
 
     const navigate = useNavigate()
 
@@ -43,9 +43,6 @@ const PostEditor = () => {
     
     const postIdFromUrl = useLocation().pathname.split("/")[2]
     
-    console.log("PE: new Post?: " + creatingNewPost)
-    //console.log("PE: " + typeof postIdFromUrl)
-
     useEffect(() => {
         if (isNaN(postIdFromUrl)) {
             setCreatingNewPost(true)
@@ -57,7 +54,6 @@ const PostEditor = () => {
                     const res = await axios.get("/posts/" + postIdFromUrl)
                     setPost(res.data)
                     setNewPost(res.data)
-                    console.log(res.data)
                 } catch(err) {
                     console.log(err)
                 }
@@ -80,8 +76,6 @@ const PostEditor = () => {
 
     useEffect(() => {
         const updatePreview = async () => {
-            
-
             console.log("PE : " + newPost)
         }
     }, [updater])
@@ -159,7 +153,7 @@ const PostEditor = () => {
                     content: newPost.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
                 })
-                navigate("/doku/" + newPost.id)
+                navigate("/doku/")
             } catch(err) {
                 console.log(err)
             }
@@ -175,7 +169,7 @@ const PostEditor = () => {
                     content: newPost.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
                 })
-                navigate("/doku/" + newPost.id)
+                navigate("/doku/" + postIdFromUrl)
             } catch(err) {
                 console.log(err)
             }
@@ -187,11 +181,12 @@ const PostEditor = () => {
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             <Row className="bg-dark text-light p-5 m-3 rounded">
                 <Col sm={6}>
+                    <Link to="/" className="text-decoration-none ms-1"><ArrowLeftCircleFill />&nbsp; zurück</Link>
                     <FloatingLabel 
                     label="Titel" 
                     controlId="edit-title" 
                     data-bs-theme="dark"
-                    className="mb-4"
+                    className="my-4"
                     onChange={() => handleChangeTitle()}
                     >
                         <Form.Control
@@ -229,7 +224,8 @@ const PostEditor = () => {
                         >
                             <option value="0">kein übergeordneter Beitrag</option>
                             {postLinks?.map(link => {
-                                return(<option value={link.id}>{link.title}</option>)
+                                return(
+                                <option value={link.id} selected={link.id == post.parentid}>{link.title}</option>)
                             })}
                         </Form.Select>
                     </FloatingLabel>

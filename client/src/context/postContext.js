@@ -8,12 +8,9 @@ export const PostContextProvider = ({children}) => {
     const [subSitesExist, setSubSitesExist] = useState(false)
     const [currentPostTitle, setCurrentPostTitle] = useState("")
 
-    const goToTopLevel = () => {
-        setParentId(0)
-        setCurrentPostId(null)
-    }
+    const replaceSpaces = str => str.replace(/ /g, '-'); // Replaces spaces with dashes
 
-    return <PostContext.Provider value={{ currentPostTitle, setCurrentPostTitle, subSitesExist, setSubSitesExist, goToTopLevel, parentId, setParentId, currentPostId, setCurrentPostId}}>
+    return <PostContext.Provider value={{ replaceSpaces, currentPostTitle, setCurrentPostTitle, subSitesExist, setSubSitesExist, parentId, setParentId, currentPostId, setCurrentPostId}}>
         {children}
     </PostContext.Provider>
 }

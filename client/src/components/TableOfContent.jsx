@@ -12,8 +12,7 @@ const TableOfContent = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [postLinks, setPostLinks] = useState([])
 
-    // loading the correct sub site
-    const { currentPostId } = useContext(PostContext)
+    const { replaceSpaces, currentPostId } = useContext(PostContext)
 
     // sorting links ################################### s
 
@@ -70,7 +69,7 @@ const TableOfContent = () => {
                                 return(<span className={ post.id == currentPostId ? "active cursor-pointer" : "cursor-pointer not-active"}>. . </span>)
                             })}
                             <Link 
-                                to={"/doku/" + post.id + "/" + post.title}
+                                to={"/doku/" + post.id + "/" + replaceSpaces(post.title)}
                                 key={"toc-" + post.id} 
                                 className={ post.id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
                             >{post.title}</Link>

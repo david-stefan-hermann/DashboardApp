@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken"
 export const getPosts = (req, res) => {
 
     const q = req.query.parentId > 0 ? {
-        text: "SELECT * FROM blog_schema.posts WHERE parentid = ($1)",
+        text: "SELECT * FROM blog_schema.posts WHERE parentid = ($1) ORDER BY title",
         values: [req.query.parentId]
     } : {
-        text: "SELECT * FROM blog_schema.posts WHERE parentid is null OR parentid = 0"
+        text: "SELECT * FROM blog_schema.posts WHERE parentid is null OR parentid = 0 ORDER BY title"
     }
 
     // TODO: check permission to view private posts 
@@ -23,7 +23,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => { 
     const q = {
-        text: "SELECT username, img, uid, title, content, image, parentid, updated FROM blog_schema.users JOIN blog_schema.posts ON blog_schema.users.id = blog_schema.posts.uid WHERE blog_schema.posts.id = $1",
+        text: "SELECT username, img, uid, title, content, short, image, parentid, updated FROM blog_schema.users JOIN blog_schema.posts ON blog_schema.users.id = blog_schema.posts.uid WHERE blog_schema.posts.id = $1",
         values: [req.params.id]
     }
 
@@ -94,10 +94,11 @@ export const updatePost = (req, res) => {
     
         const userId = userInfo.id
         const postId = req.params.id
+        const parentId = req.body.parentid == postId ? 0 : req.body.parentid
 
         const q = {
             text: "UPDATE blog_schema.posts SET title = $1, short = $2, content = $3, updated = $4, image = $5, is_private = $6, parentid = $7 WHERE id = $8 AND uid = $9",
-            values: [req.body.title, req.body.short, req.body.content, req.body.date, req.body.image, req.body.is_private, req.body.parentid, postId, userId]
+            values: [req.body.title, req.body.short, req.body.content, req.body.date, req.body.image, req.body.is_private, parentId, postId, userId]
         }
         db.query(q)
         .then(result => {

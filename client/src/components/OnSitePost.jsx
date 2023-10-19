@@ -17,13 +17,15 @@ const OnSitePost = () => {
     const { currentUser } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
     const [post, setPost] = useState({})
-    const { currentPostId } = useContext(PostContext)
+    const { currentPostId, setParentId } = useContext(PostContext)
     
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get("/posts/" + currentPostId)
                 setPost(res.data)
+                // set parent id: sub sites will be queried by this id
+                setParentId(post.parentid)
             } catch(err) {
                 console.log(err)
             }
@@ -42,10 +44,10 @@ const OnSitePost = () => {
                     // edit button
                     <Link 
                         to={"edit"}
-                        className="text-decoration-none" 
+                        className="text-decoration-none mb-4" 
                     ><PencilFill /> Diesen Beitrag bearbeiten</Link> : ""
                 }
-                <p className="mt-4">{post?.short}</p>                
+                <ReactMarkdown>{post?.short}</ReactMarkdown>
             </Row>
             <Row>
                 <Container>

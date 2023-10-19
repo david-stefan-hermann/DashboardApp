@@ -10,20 +10,17 @@ import { HouseFill, CaretRightFill } from 'react-bootstrap-icons';
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 const SiteLocation = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [siteLocation, setSiteLocation] = useState([])
-
+    const [ currentPostExists, setCurrentPostExists ] = useState([])
     // loading the correct sub site
-    const { goToTopLevel, parentId, setParentId, setCurrentPostId, currentPostId } = useContext(PostContext)
-
-    // parent id for loop
-    let searchForParent = parentId
+    const { replaceSpaces, parentId, setParentId, setCurrentPostId, currentPostId } = useContext(PostContext)
 
     const findById = async id => {
-        if (id == 0 || !id || id == null) {
+        if (id <= 0 || !id || id == null) {
         } else {
             try {
                 const res = await axios.get("/links/" + id)
@@ -45,31 +42,25 @@ const SiteLocation = () => {
         setIsLoading(false)
     }, [currentPostId])
 
-    const handleClick = (post, parent) => {
-        /*
-        setCurrentPostId(post)
-        setParentId(parent)
-    */
-    }
-
     return (
         <>
-            { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
-            <Container>
-            <Link><HouseFill color="var(--green-1)" /></Link>
-                {siteLocation.map((loc, idx) => {
-                    return (
-                        <>
-                        <span className="not-active">&nbsp;&nbsp;<CaretRightFill />&nbsp;&nbsp;</span>  
-                        <Link 
-                        to={"/doku/" + loc.id + "/" + loc.title}
-                        key={"loc-" + loc.id} 
-                        className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
-                        onClick={() => handleClick(loc.id, loc.parentid)}
-                        >{loc.title}</Link></>
-                    )
-                })}
-            </Container>
+            { currentPostId > 0 ? <>
+                { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
+                <Container>
+                <Link to={"/doku/"}><HouseFill color="var(--green-1)" /></Link>
+                    {siteLocation.map((loc, idx) => {
+                        return (
+                            <>
+                            <span className="not-active">&nbsp;&nbsp;<CaretRightFill />&nbsp;&nbsp;</span>  
+                            <Link 
+                            to={"/doku/" + loc.id + "/" + replaceSpaces(loc.title)}
+                            key={"loc-" + loc.id} 
+                            className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
+                            >{loc.title}</Link></>
+                            )
+                        })}
+                </Container>
+            </> : ""}
         </>
     )
 }
