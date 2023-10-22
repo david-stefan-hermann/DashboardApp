@@ -1,9 +1,9 @@
-import { db, queryDB } from "../db.js"
+import { db } from "../db.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
-
 export const register = (req, res) => {
+    
     // check if empty
     if (req.body.username == "" || req.body.password == "") {
         return res.status(422).json("Empty username or password")

@@ -1,7 +1,12 @@
 import { db } from "../db.js"
 import jwt from "jsonwebtoken"
+import { User, Post } from "../mongoose_models.js"
 
 export const getPosts = (req, res) => {
+    console.log(">> posts: testing mongo ") 
+    const data = User.find()
+    console.log(data)
+    return res.status(404).json("no worky :(")
 
     const q = req.query.parentId > 0 ? {
         text: "SELECT * FROM blog_schema.posts WHERE parentid = ($1) ORDER BY title",
