@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "MERN Knowledge Base API",
+  "description": "MERN-Knowledge-Base-API",
   "main": "index.js",
   "type": "module",
   "scripts": {

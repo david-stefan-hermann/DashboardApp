@@ -22,7 +22,7 @@ export const queryDB = (query, values) => {
 }
 
 import { MongoClient, ServerApiVersion } from 'mongodb'
-const uri = "mongodb+srv://atlas-user-1:@david-hermann-atlas.a4papbn.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://atlas-user-1:JAECYiyjetzGUJb2@david-hermann-atlas.a4papbn.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, {
     serverApi: {
