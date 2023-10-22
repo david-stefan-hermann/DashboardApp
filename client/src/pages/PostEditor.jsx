@@ -41,7 +41,7 @@ const PostEditor = () => {
         content: ""
     }
     
-    const postIdFromUrl = useLocation().pathname.split("/")[2]
+    const postIdFromUrl = useLocation().pathname.split("/")[1]
     
     useEffect(() => {
         if (isNaN(postIdFromUrl)) {
@@ -131,7 +131,7 @@ const PostEditor = () => {
     const handleDelete = async() => {
         try {
             await axios.delete("/posts/" + postIdFromUrl)
-            navigate("/doku")
+            navigate("/")
         } catch(err) {
             console.log(err)
         }
@@ -153,7 +153,7 @@ const PostEditor = () => {
                     content: newPost.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
                 })
-                navigate("/doku/")
+                navigate("/")
             } catch(err) {
                 console.log(err)
             }
@@ -169,7 +169,7 @@ const PostEditor = () => {
                     content: newPost.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
                 })
-                navigate("/doku/" + postIdFromUrl)
+                navigate("/" + postIdFromUrl)
             } catch(err) {
                 console.log(err)
             }
@@ -198,7 +198,7 @@ const PostEditor = () => {
                     </FloatingLabel>
 
                     <FloatingLabel 
-                    label="Titelbild" 
+                    label="Titelbild URL" 
                     controlId="edit-image" 
                     data-bs-theme="dark"
                     className="mb-4"

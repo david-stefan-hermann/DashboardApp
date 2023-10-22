@@ -29,6 +29,16 @@ code {
   cursor: pointer;
 }
 
+.card-hover {
+  border: 1px solid var(--green-1);
+}
+
+.card-hover:hover {
+  cursor: pointer;
+  border: 1px solid var(--green-2);
+  background-color: var(--secondary-color-dark);
+}
+
 .toc-row {
   overflow: hidden;
   position: relative;

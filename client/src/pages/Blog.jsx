@@ -16,7 +16,7 @@ import { PostContext } from '../context/postContext';
 const Blog = () => {
     const { currentPostId, setCurrentPostId, subSitesExist, parentId, setParentId, currentPostTitle } = useContext(PostContext)
 
-    const postIdFromUrl = useLocation().pathname.split("/")[2]
+    const postIdFromUrl = useLocation().pathname.split("/")[1]
     
     useEffect(() => {
         setCurrentPostId(postIdFromUrl == "" ? 0 : postIdFromUrl)

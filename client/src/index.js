@@ -4,11 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
 import './colors.css'
 import App from './App';
+import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 
 import { AuthContextProvider } from './context/authContext';
 import { PostContextProvider } from './context/postContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+if (process.env.NODE_ENV === 'production') disableReactDevTools()
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
 root.render(
   <React.StrictMode>
     <AuthContextProvider>

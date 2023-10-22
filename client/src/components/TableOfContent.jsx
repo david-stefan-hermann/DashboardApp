@@ -9,8 +9,8 @@ import { Link } from "react-router-dom"
 import { PostContext } from "../context/postContext"
 
 const TableOfContent = () => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [postLinks, setPostLinks] = useState([])
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ postLinks, setPostLinks ] = useState([])
 
     const { replaceSpaces, currentPostId } = useContext(PostContext)
 
@@ -69,7 +69,7 @@ const TableOfContent = () => {
                                 return(<span className={ post.id == currentPostId ? "active cursor-pointer" : "cursor-pointer not-active"}>. . </span>)
                             })}
                             <Link 
-                                to={"/doku/" + post.id + "/" + replaceSpaces(post.title)}
+                                to={"/" + post.id + "/" + replaceSpaces(post.title)}
                                 key={"toc-" + post.id} 
                                 className={ post.id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
                             >{post.title}</Link>
@@ -80,7 +80,7 @@ const TableOfContent = () => {
             <Row className="toc-row mt-3">
                 <Col sm={12}>
                     <Link 
-                        to="/doku/edit" 
+                        to="/edit" 
                         className="text-decoration-none"
                     ><DatabaseFillAdd /> Beitrag hinzufügen</Link>
                 </Col>

@@ -6,9 +6,7 @@ import CredentialSiteFrame from "./components/CredentialSiteFrame";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
-import About from "./pages/About";
 import Blog from "./pages/Blog";
-import SinglePage from "./pages/SinglePage";
 import PostEditor from "./pages/PostEditor";
 
 import { PostContext } from "./context/postContext"
@@ -30,30 +28,26 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <About></About>
-      },
-      {
-        path: "/doku",
         element: <Blog></Blog>
       },
       {
-        path: "/doku/:id",
+        path: "/:id",
         element: <Blog></Blog>
       },
       {
-        path: "/doku/:id/:title",
+        path: "/:id/:title",
         element: <Blog></Blog>
       },
       {
-        path: "/doku/edit",
+        path: "/edit",
         element: <PostEditor></PostEditor>
       },
       {
-        path: "/doku/:id/edit",
+        path: "/:id/edit",
         element: <PostEditor></PostEditor>
       },
       {
-        path: "/doku/:id/:title/edit",
+        path: "/:id/:title/edit",
         element: <PostEditor></PostEditor>
       }
     ]

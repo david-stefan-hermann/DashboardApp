@@ -47,13 +47,13 @@ const SiteLocation = () => {
             { currentPostId > 0 ? <>
                 { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
                 <Container>
-                <Link to={"/doku/"}><HouseFill color="var(--green-1)" /></Link>
+                <Link to={"/"}><HouseFill color="var(--green-1)" /></Link>
                     {siteLocation.map((loc, idx) => {
                         return (
                             <>
                             <span className="not-active">&nbsp;&nbsp;<CaretRightFill />&nbsp;&nbsp;</span>  
                             <Link 
-                            to={"/doku/" + loc.id + "/" + replaceSpaces(loc.title)}
+                            to={"/" + loc.id + "/" + replaceSpaces(loc.title)}
                             key={"loc-" + loc.id} 
                             className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
                             >{loc.title}</Link></>

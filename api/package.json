@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "backend to react site",
+  "description": "MERN Knowledge Base API",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,7 +20,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
-    "mongodb": "^6.1.0",
+    "mongodb": "^6.2.0",
     "mongoose": "^7.6.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",

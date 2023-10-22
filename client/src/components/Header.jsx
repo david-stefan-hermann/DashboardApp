@@ -13,12 +13,23 @@ const Header = () => {
         <header>
             <Navbar expand="lg" variant="dark" bg="dark" className="fw-normal">
                 <Container>
-                    <Navbar.Brand className="background-color-text" href="/">David Hermann</Navbar.Brand>
+                    <Navbar.Brand 
+                            href="/"
+                        ><img
+                        alt=""
+                        src={process.env.PUBLIC_URL + "/brain.png"}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                    /></Navbar.Brand>
+                    <Navbar.Brand 
+                        className="background-color-text" 
+                        href="/"
+                    >David Hermann</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
 
                         <Nav>
-                            <Nav.Link className="background-color-text" href="/doku/?category=public">Dokumentation</Nav.Link>
                             <Nav.Link className="background-color-text" href="https://github.com/david-stefan-hermann">Meine Projekte</Nav.Link>
                         </Nav>
 

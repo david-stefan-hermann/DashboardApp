@@ -15,8 +15,8 @@ import ReactMarkdown from 'react-markdown';
 
 const OnSitePost = () => {
     const { currentUser } = useContext(AuthContext)
-    const [isLoading, setIsLoading] = useState(true)
-    const [post, setPost] = useState({})
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ post, setPost ] = useState({})
     const { currentPostId, setParentId } = useContext(PostContext)
     
     useEffect(() => {

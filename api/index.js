@@ -6,10 +6,14 @@ import usersRoutes from "./routes/users.js"
 import postRoutes from "./routes/posts.js"
 import linkRoutes from "./routes/links.js"
 import locationRoutes from "./routes/location.js"
+import cors from "cors"
 
 const app = express()
 
 app.use(express.json())
+app.use(cors({
+    origin: ["http://localhost:3000/"]
+}))
 app.use(cookieParser())
 app.use("/api/auth", authRoutes)
 app.use("/api/users", usersRoutes)

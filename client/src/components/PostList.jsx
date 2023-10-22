@@ -4,15 +4,17 @@ import Col from 'react-bootstrap/Col'
 import Image from "react-bootstrap/esm/Image"
 import Button from 'react-bootstrap/Button'
 import LoadingSpinner from "./LoadingSpinner"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ReactMarkdown from 'react-markdown';
 
 import axios from "axios"
 import { PostContext } from "../context/postContext"
+import Container from "react-bootstrap/esm/Container"
 
 const PostList = () => {
     const [ isLoading, setIsLoading ] = useState(true)
     const [ posts, setPosts ] = useState([])
+    const navigate = useNavigate()
 
     // loading the correct sub site
     const { replaceSpaces, setCurrentPostTitle, parentId, setParentId, setCurrentPostId, currentPostId } = useContext(PostContext)
@@ -30,26 +32,31 @@ const PostList = () => {
         setIsLoading(false)
     }, [currentPostId])
 
+    const handleLink = (post) => {
+        console.log("pl: l")
+        navigate("/" + post.id + "/" + replaceSpaces(post.title))
+    }
+
     return (
         <>
             { posts.length >= 0 ? <h3>Unterseiten</h3> : ""}
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             {posts.map(post => {
-                return (  
-                <Row key={"posts-" + post.id} className="another-color px-2 py-4 my-2">
-                    <Col sm={4}>
-                        <Image
-                            src={post.image}
-                            fluid
-                        ></Image>
-                    </Col>
-                    <Col sm={8}>
-                        <h4 className='font-weight-light'>{post.title}</h4>
-                        <ReactMarkdown>{post.short}</ReactMarkdown>
-                        <Link to={"/doku/" + post.id + "/" + replaceSpaces(post.title)} className="mt-2">Beitrag anzeigen</Link>
-                    </Col>
-                    
-                </Row>
+                return (
+                    <Row>
+                        <Col sm={12} className="ms-2 my-2 py-3 card-hover"
+                        onClick={() => handleLink(post)}>
+                            <Row>
+                                <Col sm={5} className="ps-3">
+                                    <Image src={post.image} fluid ></Image>
+                                </Col>
+                                <Col sm={7}>
+                                    <h4 className='font-weight-light'>{post.title}</h4>
+                                    <ReactMarkdown>{post.short}</ReactMarkdown>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
             )})}
         </>
     )
