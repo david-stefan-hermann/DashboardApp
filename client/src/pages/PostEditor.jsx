@@ -6,6 +6,8 @@ import Image from "react-bootstrap/esm/Image"
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+
 import { Trash, Upload, ArrowLeftCircleFill } from "react-bootstrap-icons"
 
 import axios from "axios"
@@ -19,47 +21,42 @@ import ReactMarkdown from 'react-markdown';
 import LoadingSpinner from "../components/LoadingSpinner"
 import moment from "moment"
 
-const PostEditor = () => {
+const PostEditor = (props) => {
+    const navigate = useNavigate()
     const { currentUser } = useContext(AuthContext)
     const [ isLoading, setIsLoading ] = useState(true)
-    const [ updater, setUpdater ] = useState(false)
-    const [ creatingNewPost, setCreatingNewPost ] = useState(false)
-    const [ post, setPost ] = useState({})
-    const [ newPost, setNewPost ] = useState({})
-    const [ postLinks, setPostLinks ] = useState([])
-
-    const navigate = useNavigate()
-
+    
     const blankNewPost = {
-        id: -1,
-        is_private: false,
-        parentid: 0,
-        uid: 0,
-        image: "",
         title: "",
         short: "",
-        content: ""
+        content: "",
+        image: "",
+        isprivate: false,
+        parent: null,
+        user: null,
     }
-    
+    const [ post, setPost ] = useState(blankNewPost)
+    const [ postLinks, setPostLinks ] = useState([])
     const postIdFromUrl = useLocation().pathname.split("/")[1]
     
-    useEffect(() => {
-        if (isNaN(postIdFromUrl)) {
-            setCreatingNewPost(true)
-            setPost(blankNewPost)
-            setNewPost(blankNewPost)
-        } else {    
+    
+    useEffect(() => {        
+        if (props.creatingNewPost == true) {
+
+        } else {
             const fetchData = async () => {
                 try {
                     const res = await axios.get("/posts/" + postIdFromUrl)
                     setPost(res.data)
-                    setNewPost(res.data)
+                    console.log("PE: p " + res.data)
                 } catch(err) {
                     console.log(err)
                 }
             }
             fetchData()
         }
+        console.log("> pe: post " + post.title)
+
         setIsLoading(false)
 
         // load available posts
@@ -73,64 +70,12 @@ const PostEditor = () => {
         }
         fetchLinks()
     }, [])
-
-    useEffect(() => {
-        const updatePreview = async () => {
-            console.log("PE : " + newPost)
-        }
-    }, [updater])
-
-    function handleChangeTitle() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-title")
-        thisPost.title = elem.value
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
-
-    function handleChangePrivate() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-private")
-        thisPost.is_private = elem.checked
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
-
-    function handleChangeParent() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-parent")
-        thisPost.parentid = elem.value
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
-
-    function handleChangeImage() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-image")
-        thisPost.image = elem.value
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
-
-    function handleChangeShort() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-short")
-        thisPost.short = elem.value
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
-
-    function handleChangeContent() {
-        const thisPost = newPost
-        const elem = document.getElementById("edit-content")
-        thisPost.content = elem.value
-        setNewPost(thisPost)
-        setUpdater(!updater)
-    }
     
     const handleDelete = async() => {
         try {
             await axios.delete("/posts/" + postIdFromUrl)
+            
+            console.log("pe: after axios ")
             navigate("/")
         } catch(err) {
             console.log(err)
@@ -138,22 +83,22 @@ const PostEditor = () => {
     }
 
     const handleUpdate = async() => {
-        const thisUserId = currentUser ? currentUser.id : 0
-
-        if (creatingNewPost) {
+        const parent = post.parent == postIdFromUrl ? null : post.parent
+        if (props.creatingNewPost == true) {
             // Post
             try {
                 await axios.post("/posts/", {
-                    is_private: newPost.is_private,
-                    parentid: newPost.parentid,
-                    uid: thisUserId,
-                    image: newPost.image,
-                    title: newPost.title,
-                    short: newPost.short,
-                    content: newPost.content,
+                    isprivate: post.isprivate,
+                    parentid: parent,
+                    uid: currentUser.id,
+                    image: post.image,
+                    title: post.title,
+                    short: post.short,
+                    content: post.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+                }).catch(err => {
+                    console.log(err)
                 })
-                navigate("/")
             } catch(err) {
                 console.log(err)
             }
@@ -161,121 +106,106 @@ const PostEditor = () => {
             // Update
             try {
                 await axios.put("/posts/" + postIdFromUrl, {
-                    is_private: newPost.is_private,
-                    parentid: newPost.parentid,
-                    image: newPost.image,
-                    title: newPost.title,
-                    short: newPost.short,
-                    content: newPost.content,
+                    isprivate: post.isprivate,
+                    parentid: parent,
+                    image: post.image,
+                    title: post.title,
+                    short: post.short,
+                    content: post.content,
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+                }).catch(err => {
+                    console.log(err)
                 })
-                navigate("/" + postIdFromUrl)
             } catch(err) {
                 console.log(err)
             }
         }
     }
 
+    const handleChange = (e, type="") => {
+        if (type.length <= 0) {
+            // handle text inputs
+            setPost({
+                ...post,
+                [e.target.name]: e.target.value
+            })
+        } else if (type.localeCompare("switch") == 0) {
+            // handle switch
+            setPost({
+                ...post,
+                isprivate: !e.target.checked
+            })
+
+        }
+    }
+
     return (
         <>
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
+
             <Row className="bg-dark text-light p-5 m-3 rounded">
+                { !currentUser.id ? <Alert variant="danger">Du bist nicht eingeloggt. <Link to="login">zum Login..</Link></Alert> : null }
+                
                 <Col sm={6}>
                     <Link to="/" className="text-decoration-none ms-1"><ArrowLeftCircleFill />&nbsp; zurück</Link>
-                    <FloatingLabel 
-                    label="Titel" 
-                    controlId="edit-title" 
-                    data-bs-theme="dark"
-                    className="my-4"
-                    onChange={() => handleChangeTitle()}
-                    >
+                    
+                    <FloatingLabel data-bs-theme="dark" className="my-4" label="Titel" >
                         <Form.Control
-                        value={post.title}
-                        className="box-shadow text-input-field"
-                        as="textarea"
-                        style={{ height: '100px' }}
+                        name="title" value={post.title} onChange={e => handleChange(e)}
+                        className="box-shadow text-input-field" as="textarea" style={{ height: '100px' }}
                         />
                     </FloatingLabel>
 
-                    <FloatingLabel 
-                    label="Titelbild URL" 
-                    controlId="edit-image" 
-                    data-bs-theme="dark"
-                    className="mb-4"
-                    onChange={() => handleChangeImage()}
-                    >
+                    <FloatingLabel data-bs-theme="dark" className="mb-4" label="Titelbild URL">
                         <Form.Control
-                        value={post.image}
-                        className="box-shadow text-input-field"
-                        as="textarea"
-                        style={{ height: '100px' }}
+                        name="image" value={post.image} onChange={e => handleChange(e)}
+                        className="box-shadow text-input-field" as="textarea" style={{ height: '100px' }}
                         />
                     </FloatingLabel>
 
-                    <FloatingLabel 
-                    label="Übergeordneter Beitrag" 
-                    controlId="edit-parent" 
-                    data-bs-theme="dark"
-                    className="mb-4"
-                    onChange={() => handleChangeImage()}
-                    >
+                    <FloatingLabel data-bs-theme="dark" className="mb-4" label="Übergeordneter Beitrag">
                         <Form.Select 
-                        onChange={() => handleChangeParent()}
-                        >
+                        name="parent" value={post?.parent?.id} onChange={e => handleChange(e)}>
                             <option value="0">kein übergeordneter Beitrag</option>
                             {postLinks?.map(link => {
-                                return(
-                                <option value={link.id} selected={link.id == post.parentid}>{link.title}</option>)
+                                if (link?._id != postIdFromUrl) 
+                                {return(
+                                    <option value={link?._id}>{link?.title}</option>
+                                )}
                             })}
                         </Form.Select>
                     </FloatingLabel>
 
-                    <Form.Check
-                        label="privat?"
-                        id="edit-private"
-                        type="switch"
-                        data-bs-theme="dark"
-                        className="mb-4"
-                        checked={post.is_private}
-                        onChange={() => handleChangePrivate()}
+                    <Form.Check data-bs-theme="dark" className="mb-4"
+                        label="privat?" type="switch" defaultValue={post.isprivate} onChange={e => handleChange(e, "switch")}
                     />
                 </Col>
+
                 <Col sm={6}>
-                    <h4 className="mb-4">{newPost?.title}</h4>
-                    {newPost?.image ?
-                        <Image
-                        className="mb-4"
-                        src={newPost.image}
-                        fluid></Image>
-                        : "Titelbild"
-                    }
+                    <h4 className="mb-4">{post?.title}</h4>
+                    { post?.image ? <Image className="mb-4" src={post.image} fluid></Image> : "Titelbild" }
                 </Col>
             </Row>
+
+
+
             <Row className="bg-dark text-light p-5 m-3 rounded">
                 <Col sm={6}>
-                    <FloatingLabel 
-                    label="Beschreibung" 
-                    controlId="edit-short" 
-                    data-bs-theme="dark"
-                    className="mb-4"
-                    onChange={() => handleChangeShort()}
-                    >
+                    <FloatingLabel data-bs-theme="dark" className="mb-4" label="Beschreibung">
                         <Form.Control
-                        value={post.short}
-                        className="box-shadow text-input-field"
-                        as="textarea"
-                        style={{ height: '100px' }}
+                        name="short" value={post.short} onChange={e => handleChange(e)}
+                        className="box-shadow text-input-field" as="textarea" style={{ height: '300px' }}
                         />
                     </FloatingLabel>
                 </Col>
                 <Col sm={6}>
-                    { newPost?.short ? 
+                    { post?.short ? 
                         <>
                         <Container className="box-shadow px-4 primary-color rounded-top">
                             Vorschau
                         </Container>
                         <Container className="box-shadow p-4 mb-4 rounded-bottom">
-                            <ReactMarkdown>{newPost?.short}</ReactMarkdown>
+                            <ReactMarkdown>{post?.short}</ReactMarkdown>
                         </Container>
                         </>
                         :
@@ -285,37 +215,32 @@ const PostEditor = () => {
             </Row>
             <Row className="bg-dark text-light p-5 m-3 rounded">
                 <Col sm={6}>
-                    <FloatingLabel 
-                    label="Inhalt" 
-                    controlId="edit-content" 
-                    data-bs-theme="dark"
-                    className="mb-4"
-                    onChange={() => handleChangeContent()}
-                    >
-                        <Form.Control
-                        value={post.content}
-                        className="box-shadow text-input-field"
-                        as="textarea"
-                        style={{ height: '100px' }}
+                    <FloatingLabel data-bs-theme="dark" className="mb-4" label="Inhalt">
+                        <Form.Control 
+                        name="content" value={post.content} onChange={e => handleChange(e)}
+                        className="box-shadow text-input-field" as="textarea" style={{ height: '600px' }}
                         />
                     </FloatingLabel>
                     {
-                        creatingNewPost ?
+                        props.creatingNewPost == true ?
                         "" :
                         <Button variant="dark" className="me-4 border-danger" onClick={handleDelete}><Trash /> &nbsp;Beitrag löschen</Button>
                     }
-                        <Button variant="success" onClick={handleUpdate}>
-                            <Upload /> &nbsp;{creatingNewPost ? "Beitrag hochladen" : "Beitrag Updaten"}
-                        </Button>
+                    <Button variant="success" onClick={handleUpdate}>
+                        <Upload /> &nbsp;{props.creatingNewPost == true ? "Beitrag hochladen" : "Beitrag Updaten"}
+                    </Button>
+
                 </Col>
+
+
                 <Col sm={6}>
-                    { newPost?.content ? 
+                    { post?.content ? 
                         <>
                         <Container className="box-shadow px-4 primary-color rounded-top">
                             Vorschau
                         </Container>
                         <Container className="box-shadow p-4 rounded-bottom">
-                            <ReactMarkdown>{newPost?.content}</ReactMarkdown>
+                            <ReactMarkdown>{post?.content}</ReactMarkdown>
                         </Container>
                         </>
                         :

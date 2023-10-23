@@ -39,8 +39,8 @@ const OnSitePost = () => {
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
             <Row>
                 <h1 className='font-weight-light'>{post?.title}</h1>
-                <h6 className="fst-italic">{post?.username}, {Moment(post?.updated).format("DD.MM.YYYY, HH:mm")}</h6>
-                { currentUser?.id == post?.uid ?
+                <h6 className="fst-italic">{post?.user?.username}, {Moment(post?.updated).format("DD.MM.YYYY, HH:mm")}</h6>
+                { currentUser?.id == post?.user?._id ?
                     // edit button
                     <Link 
                         to={"edit"}

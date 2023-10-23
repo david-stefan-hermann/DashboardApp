@@ -39,16 +39,16 @@ const router = createBrowserRouter([
         element: <Blog></Blog>
       },
       {
-        path: "/edit",
-        element: <PostEditor></PostEditor>
+        path: "/create",
+        element: <PostEditor creatingNewPost={true}></PostEditor>
       },
       {
         path: "/:id/edit",
-        element: <PostEditor></PostEditor>
+        element: <PostEditor creatingNewPost={false}></PostEditor>
       },
       {
         path: "/:id/:title/edit",
-        element: <PostEditor></PostEditor>
+        element: <PostEditor creatingNewPost={false}></PostEditor>
       }
     ]
   },

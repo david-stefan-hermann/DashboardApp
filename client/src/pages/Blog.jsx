@@ -22,6 +22,8 @@ const Blog = () => {
         setCurrentPostId(postIdFromUrl == "" ? 0 : postIdFromUrl)
     }, [postIdFromUrl])
 
+    console.log("Blog: " + postIdFromUrl)
+    console.log(currentPostId > 0)
     return (
         <main>
             <Container>
@@ -39,7 +41,7 @@ const Blog = () => {
                             <SiteLocation className="mb-3"></SiteLocation>
                         </Row>
                         <Row>
-                            {currentPostId > 0 ? <OnSitePost></OnSitePost> : "" }
+                            {currentPostId != "" ? <OnSitePost></OnSitePost> : "" }
                         </Row>
                     </Col>
                 </Row>

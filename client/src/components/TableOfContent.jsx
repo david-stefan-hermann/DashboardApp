@@ -16,35 +16,49 @@ const TableOfContent = () => {
 
     // sorting links ################################### s
 
-    function buildTableOfContentsWithIndents(entries, parent_id = 0, level = 0) {
+    function buildTableOfContentsWithIndents(entries, parent_id = "0", level = 0) {
         const result = [];
-      
+
+        // replace null values with 0
+        for (const entry of entries) {
+            if (entry.parent == null) {
+                entry.parent = "0"
+            } 
+        }
+
+        for (const entry of entries) {
+            console.log(entry.parent.localeCompare(parent_id))
+        }
+
         const sortedEntries = entries
-            .filter((entry) => parseInt(entry.parentid) === parent_id)
+            .filter((entry) => entry.parent.localeCompare(parent_id) == 0)
             .sort((a, b) => a.title.localeCompare(b.title));
-      
+
+
         for (const entry of sortedEntries) {
             const indents = level + 1;
-            const entryWithIndent = { ...entry, indents };
+            const entryWithIndent = {...entry, indents}
         
             result.push(entryWithIndent);
             
-            const subContents = buildTableOfContentsWithIndents(entries, parseInt(entry.id), indents);
+            
+            const subContents = buildTableOfContentsWithIndents(entries, entry._id, indents);
             if (subContents.length > 0) {
                 result.push(...subContents);
             }
+
         }
 
         return result;
       }
 
     // sorting links ################################### - e
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get("/links/")
-                
+
                 setPostLinks(buildTableOfContentsWithIndents(res.data))
             } catch(err) {
                 console.log(err)
@@ -53,25 +67,26 @@ const TableOfContent = () => {
         fetchData()
         setIsLoading(false)
 
-        // sort array
     }, [currentPostId])
 
     return (
         <>
             <h3>Table Of Contents</h3>
             { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
+            {console.log("toc: " + postLinks.length)}
             { postLinks.map(post => {
                 const indentsAsArray = Array.from({ length: post.indents - 1})
+                
                 return (
                     <Row className="toc-row">
                         <Col sm={12}>
                             {indentsAsArray.map(i => {
-                                return(<span className={ post.id == currentPostId ? "active cursor-pointer" : "cursor-pointer not-active"}>. . </span>)
+                                return(<span className={ post._id == currentPostId ? "active cursor-pointer" : "cursor-pointer not-active"}>. . </span>)
                             })}
                             <Link 
-                                to={"/" + post.id + "/" + replaceSpaces(post.title)}
-                                key={"toc-" + post.id} 
-                                className={ post.id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
+                                to={"/" + post._id + "/" + replaceSpaces(post.title)}
+                                key={"toc-" + post._id} 
+                                className={ post._id == currentPostId ? "active toc-link" : "toc-link text-decoration-none"} 
                             >{post.title}</Link>
                         </Col>
                     </Row>
@@ -80,7 +95,7 @@ const TableOfContent = () => {
             <Row className="toc-row mt-3">
                 <Col sm={12}>
                     <Link 
-                        to="/edit" 
+                        to="/create" 
                         className="text-decoration-none"
                     ><DatabaseFillAdd /> Beitrag hinzufügen</Link>
                 </Col>

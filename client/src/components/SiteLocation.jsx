@@ -24,11 +24,10 @@ const SiteLocation = () => {
         } else {
             try {
                 const res = await axios.get("/links/" + id)
-                //setLoopCurrentId(res.data[0].parentid)
                 
-                findById(res.data[0].parentid)
+                findById(res.data.parent)
                 
-                setSiteLocation(oldSiteLocation => [res.data[0], ...oldSiteLocation])                
+                setSiteLocation(oldSiteLocation => [res.data, ...oldSiteLocation])                
             } catch(err) {
                 console.log(err)
             }
@@ -44,7 +43,7 @@ const SiteLocation = () => {
 
     return (
         <>
-            { currentPostId > 0 ? <>
+            { currentPostId != "" ? <>
                 { isLoading ? <LoadingSpinner></LoadingSpinner> : null }
                 <Container>
                 <Link to={"/"}><HouseFill color="var(--green-1)" /></Link>
@@ -53,10 +52,10 @@ const SiteLocation = () => {
                             <>
                             <span className="not-active">&nbsp;&nbsp;<CaretRightFill />&nbsp;&nbsp;</span>  
                             <Link 
-                            to={"/" + loc.id + "/" + replaceSpaces(loc.title)}
-                            key={"loc-" + loc.id} 
-                            className={ loc.id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
-                            >{loc.title}</Link></>
+                            to={"/" + loc?._id + "/" + replaceSpaces(loc?.title)}
+                            key={"loc-" + loc?._id} 
+                            className={ loc?._id == currentPostId ? "active font-weight-light cursor-pointer" : "font-weight-light cursor-pointer"} 
+                            >{loc?.title}</Link></>
                             )
                         })}
                 </Container>

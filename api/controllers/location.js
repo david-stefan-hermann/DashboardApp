@@ -2,6 +2,7 @@ import { db } from "../db.js"
 
 
 export const getLocation = (req, res) => {   
+    return res.status(404).json("dont need")
     const q = {
         text: "SELECT id, parentid, title FROM blog_schema.posts WHERE id = $1",
         values: [req.params.id]

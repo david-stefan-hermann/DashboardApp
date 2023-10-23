@@ -9,10 +9,6 @@ import locationRoutes from "./routes/location.js"
 import cors from "cors"
 import { connectDB } from "./db.js"
 import mongoose from 'mongoose';
-import { User, Post } from "./mongoose_models.js"
-
-
-connectDB()
 
 
 const app = express()
@@ -23,11 +19,12 @@ app.use(cors({
 }))
 app.use(cookieParser())
 app.use("/api/auth", authRoutes)
-app.use("/api/users", usersRoutes)
+//app.use("/api/users", usersRoutes)
 app.use("/api/posts", postRoutes)
 app.use("/api/links", linkRoutes)
-app.use("/api/location", locationRoutes)
+//app.use("/api/location", locationRoutes)
 
+connectDB()
 
 
 mongoose.connection.once("open", () => {

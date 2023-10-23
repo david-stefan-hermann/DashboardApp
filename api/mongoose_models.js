@@ -48,7 +48,6 @@ const postSchema = new Schema({
     parent: {
         type: mongoose.Schema.ObjectId,
         ref: "Post",
-        default: null
     },
     user: {
         type: mongoose.Schema.ObjectId,

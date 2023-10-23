@@ -34,7 +34,7 @@ const PostList = () => {
 
     const handleLink = (post) => {
         console.log("pl: l")
-        navigate("/" + post.id + "/" + replaceSpaces(post.title))
+        navigate("/" + post._id + "/" + replaceSpaces(post.title))
     }
 
     return (
